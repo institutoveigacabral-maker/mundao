@@ -1,29 +1,49 @@
-# Mundo Rão
+# Mundo Rao -- Super-App Marketplace
 
-Super-app marketplace do ecossistema Mundo Rão. Inclui marketplace com categorias, carrinho de compras, carteira digital, histórico de pedidos e perfil do usuário com autenticação.
+![CI](https://github.com/institutoveigacabral-maker/mundao/actions/workflows/ci.yml/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## Tech Stack
+Super-app marketplace do ecossistema Mundo Rao. Plataforma completa com catalogo de produtos, carrinho de compras, carteira digital, historico de pedidos e autenticacao OAuth.
 
-- React 19 + TypeScript
-- Vite + Cloudflare Workers (Hono)
-- Tailwind CSS
-- React Router
-- Lucide React (ícones)
+## Stack
 
-## Como rodar
+- Hono (API / Cloudflare Workers)
+- React + Vite + TypeScript
+- Zod (validacao)
+- D1 Database (Cloudflare)
+
+## Funcionalidades
+
+- Marketplace com categorias e busca
+- Carrinho de compras com calculo automatico
+- Carteira digital com historico de transacoes
+- Perfil do usuario com autenticacao OAuth
+- API RESTful com validacao Zod
+
+## Setup Local
 
 ```bash
 git clone https://github.com/institutoveigacabral-maker/mundao.git
 cd mundao
 npm install
+cp .env.example .env.local  # configurar variaveis
 npm run dev
 ```
 
-## Estrutura
+## Testes
 
+```bash
+npm test
 ```
-src/
-  react-app/       # Frontend React (Home, Marketplace, Product, Cart, Wallet, Orders, Profile)
-  shared/          # Tipos e utilitários compartilhados
-  worker/          # Backend Hono (Cloudflare Workers)
-```
+
+27 testes cobrindo logica de negocio, validacoes e utilitarios.
+
+
+
+## Contributing
+
+Ver [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Licenca
+
+MIT -- ver [LICENSE](LICENSE).
