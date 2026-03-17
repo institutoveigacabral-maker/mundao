@@ -196,7 +196,7 @@ app.post('/api/orders', authMiddleware, async (c) => {
       return c.json({ error: `Product ${item.product_id} not found` }, 400);
     }
     
-    totalAmount += (results[0] as any).price * item.quantity;
+    totalAmount += (results[0] as { price: number }).price * item.quantity;
   }
 
   // Create order
@@ -204,7 +204,7 @@ app.post('/api/orders', authMiddleware, async (c) => {
   
   const orderResult = await c.env.DB.prepare(
     "INSERT INTO orders (user_id, total_amount, status, tracking_code) VALUES (?, ?, 'pending', ?) RETURNING id"
-  ).bind(user.id, totalAmount, trackingCode).first() as any;
+  ).bind(user.id, totalAmount, trackingCode).first() as { id: number } | null;
 
   if (!orderResult) {
     return c.json({ error: 'Failed to create order' }, 500);
@@ -220,7 +220,7 @@ app.post('/api/orders', authMiddleware, async (c) => {
     
     await c.env.DB.prepare(
       "INSERT INTO order_items (order_id, product_id, quantity, unit_price) VALUES (?, ?, ?, ?)"
-    ).bind(orderId, item.product_id, item.quantity, (results[0] as any).price).run();
+    ).bind(orderId, item.product_id, item.quantity, (results[0] as { price: number }).price).run();
   }
 
   return c.json({ 

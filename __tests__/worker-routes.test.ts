@@ -8,7 +8,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 vi.mock("@getmocha/users-service/backend", () => ({
   getOAuthRedirectUrl: vi.fn().mockResolvedValue("https://accounts.google.com/o/oauth2/auth?mock=1"),
   exchangeCodeForSessionToken: vi.fn().mockResolvedValue("mock-session-token"),
-  authMiddleware: vi.fn((c: any, next: any) => {
+  authMiddleware: vi.fn((c: { set: (key: string, value: unknown) => void }, next: () => Promise<void>) => {
     c.set("user", { id: "user-123", email: "test@example.com" });
     return next();
   }),
@@ -20,7 +20,7 @@ vi.mock("@getmocha/users-service/backend", () => ({
 const { default: app } = await import("@/worker/index");
 
 // Helper to create a mock D1 database
-function createMockDB(prepareResults: Record<string, any> = {}) {
+function createMockDB(prepareResults: Record<string, Record<string, unknown>> = {}) {
   const mockStatement = {
     bind: vi.fn().mockReturnThis(),
     all: vi.fn().mockResolvedValue({ results: [] }),
